@@ -6,7 +6,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import javax.persistence.*;
 import java.util.List;
-
 @Data
 @Entity
 @Table(name = "customers")
@@ -22,11 +21,12 @@ public class Customer {
     private String lastName;
     @Column(length = 100, name = "TC")
     private String TC;
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Access(AccessType.PROPERTY)
+    @JoinColumn(name = "customer_account_list")
 
     private List<Account> accountList;
-    @ManyToOne
-    @JoinColumn(name = "customer_of_banks")
-    private Bank bank;
+    //private Bank bank;
 
 }

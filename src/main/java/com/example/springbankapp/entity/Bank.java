@@ -24,5 +24,6 @@ public class Bank implements Serializable {
     private double dailyInterestRate;
     @Column(length = 100, name = "accRate")
     private double accumulationRate;
-
+    @OneToMany
+    private List<Customer> customerList;
 }

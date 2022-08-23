@@ -1,6 +1,7 @@
 package com.example.springbankapp.controller;
 
 import com.example.springbankapp.entity.Account;
+import com.example.springbankapp.entity.Bank;
 import com.example.springbankapp.service.impl.AccountServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,4 +23,13 @@ public class AccountController {
     public Optional<Account> findById(@PathVariable Long id){
        return accountService.findById(id);
     }
+    @GetMapping("/findAllId")
+    public <List> Bank getAllBank(){
+        return (Bank) accountService.findAll();
+    }
+    @PostMapping("/delete/{id}")
+    public void deleteAccount(@PathVariable Long id){
+        accountService.deleteAccount(id);
+    }
+
 }

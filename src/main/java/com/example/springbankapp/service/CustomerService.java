@@ -1,6 +1,7 @@
 package com.example.springbankapp.service;
 
 import com.example.springbankapp.entity.Account;
+import com.example.springbankapp.entity.Bank;
 import com.example.springbankapp.entity.Customer;
 
 import java.util.List;
