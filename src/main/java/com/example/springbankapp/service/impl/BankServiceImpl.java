@@ -13,23 +13,27 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class BankServiceImpl implements BankService {
 
     private final BankRepository bankRepository;
     private final CustomerRepository customerRepository;
     @Override
     public Optional<Bank> findById(Long id) {
+
         return bankRepository.findById(id);
     }
 
     @Override
     public Bank save(Bank bank) {
-       return bankRepository.save(bank);
+      return   bankRepository.save(bank);
     }
+
+
     @Override
     public void addCustomer(Bank bank, Customer customer){
         bank.setCustomerList((List<Customer>) customer);
-        customerRepository.saveAndFlush(customer);
+        customerRepository.save(customer);
         System.out.println(customer+"müsterisini bankanıza eklediniz!"); ;
     }
     @Override

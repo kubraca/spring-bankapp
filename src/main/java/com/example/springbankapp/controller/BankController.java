@@ -1,11 +1,12 @@
 package com.example.springbankapp.controller;
 
+import com.example.springbankapp.dto.requests.BankRequest;
 import com.example.springbankapp.entity.Bank;
 import com.example.springbankapp.service.impl.BankServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 @RestController
 @RequestMapping("/banks")
@@ -23,7 +24,8 @@ public class BankController {
         return (Bank) bankService.findAll();
     }
     @PostMapping("/addBank")
-    public Bank addBank(@RequestBody  Bank bank){
+    public Bank addBank(@RequestBody Bank bank){
+
         return bankService.save(bank);
     }
 
@@ -31,5 +33,14 @@ public class BankController {
     public void deleteBank(@PathVariable Long id){
          bankService.deleteBank(id);
     }
+    @PutMapping("/updateAll")
+    public ResponseEntity<Optional<Bank>> updateBank(@PathVariable Long id, @RequestBody Bank bankDetails){
+        Optional<Bank> bank=bankService.findById(id);
+        bank.get().setBankName(bankDetails.getBankName());
+        bank.get().setId(bankDetails.getId());
 
+        //bankService.save();
+        return ResponseEntity.ok(bank);
+
+    }
 }

@@ -1,13 +1,20 @@
 package com.example.springbankapp.controller;
 
+import com.example.springbankapp.dto.requests.CustomerRequest;
 import com.example.springbankapp.entity.Account;
 import com.example.springbankapp.entity.Bank;
 import com.example.springbankapp.entity.Customer;
 import com.example.springbankapp.service.BankService;
 import com.example.springbankapp.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +26,10 @@ public class CustomerController {
     private final BankService bankService;
 
 
+
     @PostMapping("/addCustomer")
-    public Customer add(@RequestBody Customer customer){
-       return customerService.add(customer);
+    public Customer add(@RequestBody CustomerRequest request){
+       return customerService.add(request.convertToCustomer());
 
     }
     @GetMapping("/findByID")
@@ -29,12 +37,20 @@ public class CustomerController {
         return customerService.findById(id);
     }
     @PostMapping("/addAccount")
-    public Account addAcc(@RequestBody Account account, @RequestBody Customer customer){
-        return customerService.addAcc(customer,account);
+    public Account addAcc(@RequestBody Account account, @RequestBody CustomerRequest request){
+        return customerService.addAcc(request.convertToCustomer(),account);
     }
     @GetMapping("/findAllCust")
     public List<Customer> findAllCust(){
         return customerService.findAll();
+    }
+    @PutMapping("/{id}/updateAll")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody  CustomerRequest request){
+      var customer =customerService.findById(id).orElseThrow(() -> new NotFoundException("id bulunamadı"));
+        customer.setName(request.getName());
+        customerService.add(customer);
+        return ResponseEntity.ok(customer);
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.springbankapp.entity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -12,8 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @DynamicUpdate
+@Builder
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 100, name = "cust_name")
     private String name;
@@ -24,9 +27,8 @@ public class Customer {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Access(AccessType.PROPERTY)
-    @JoinColumn(name = "customer_account_list")
+    @JoinColumn(name = "customer_account_id")
 
     private List<Account> accountList;
-    //private Bank bank;
 
 }
