@@ -15,8 +15,7 @@ public class BankController {
     private final BankServiceImpl bankService;
 
     @GetMapping("/findById/{id}")
-    public Optional<Bank> getBank(@PathVariable Long id){
-
+    public Optional<Bank> getBank(@PathVariable Long id){// BankRequest döndürüp bodyde bankrequestteki bilgiler olmalı
         return bankService.findById(id);
     }
     @GetMapping("/findAllId")
@@ -24,9 +23,9 @@ public class BankController {
         return (Bank) bankService.findAll();
     }
     @PostMapping("/addBank")
-    public Bank addBank(@RequestBody Bank bank){
+    public Bank addBank(@RequestBody BankRequest request){
 
-        return bankService.save(bank);
+        return bankService.save(request.convertToBank());
     }
 
     @PostMapping("/delete/{id}")

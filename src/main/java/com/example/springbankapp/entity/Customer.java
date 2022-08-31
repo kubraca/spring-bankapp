@@ -18,12 +18,12 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 100, name = "cust_name")
     private String name;
+
     @Column(length = 100, name = "lastname")
     private String lastName;
-    @Column(length = 100, name = "TC")
-    private String TC;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Access(AccessType.PROPERTY)

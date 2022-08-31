@@ -1,5 +1,6 @@
 package com.example.springbankapp.service;
 
+import com.example.springbankapp.dto.requests.CustomerRequest;
 import com.example.springbankapp.entity.Account;
 import com.example.springbankapp.entity.Bank;
 import com.example.springbankapp.entity.Customer;
@@ -13,7 +14,11 @@ public interface CustomerService {
 
     Customer add(Customer customer);
 
-    Account addAcc(Customer customer, Account account);
+    Account addAccount(Customer customer, Account account);
+
+    Customer updateCustomerInfo(Long id, CustomerRequest customerRequest);
 
     List<Customer> findAll();
+
+    void deleteCustomerById(Long id);
 }
