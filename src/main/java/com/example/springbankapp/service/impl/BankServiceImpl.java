@@ -1,5 +1,6 @@
 package com.example.springbankapp.service.impl;
 
+import com.example.springbankapp.dto.requests.BankRequest;
 import com.example.springbankapp.entity.Bank;
 import com.example.springbankapp.entity.Customer;
 import com.example.springbankapp.repository.BankRepository;
@@ -26,7 +27,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Bank save(Bank bank) {
-      return   bankRepository.save(bank);
+      return bankRepository.save(bank);
     }
 
 

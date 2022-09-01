@@ -25,10 +25,9 @@ public class Customer {
     @Column(length = 100, name = "lastname")
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @Access(AccessType.PROPERTY)
     @JoinColumn(name = "customer_account_id")
-
     private List<Account> accountList;
-
+   // cascade = CascadeType.ALL,
 }

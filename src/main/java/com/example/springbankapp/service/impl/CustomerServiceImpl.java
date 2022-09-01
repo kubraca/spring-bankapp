@@ -21,21 +21,24 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
     private final BankRepository bankRepository;
+
     @Override
     public Optional<Customer> findById(Long id) {
         return customerRepository.findById(id);
     }
 
     @Override
-    public Customer add(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer add(CustomerRequest request) {
+        return customerRepository.save(request.convertToCustomer());
 
     }
+
+
     @Override
-    public Account addAccount(Customer customer, Account account){
-        //var cust= customerRepository.findById(customer.getId());
-        customer.setAccountList((List<Account>) account);
-        customerRepository.saveAndFlush(customer);
+    public Account addAccount(Long id, Account account){
+        Customer cust= customerRepository.findById(id).orElseThrow();
+        cust.getAccountList().add(account);
+        customerRepository.saveAndFlush(cust);
         return account;
     }
     @Override

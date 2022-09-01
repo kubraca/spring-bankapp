@@ -21,5 +21,7 @@ public class Account {
     private String accountType;
     @Column(name = "balance")
     private double balance;
+    @Column(name="accumulationrate")
+    private double rate;
 
 }

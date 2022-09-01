@@ -19,13 +19,22 @@ public class AccountController {
         return accountService.add(account);
 
     }
+    @PostMapping("/sendMoney")
+    public void sendMoney(Long senderId, Long recieverId,
+                          @RequestBody double amount) {
+        accountService.sendMoney(senderId,recieverId,amount);
+    }
+    @PostMapping("/accumulationMoney")
+    public double accumulationMoney(Long depositAccId, int day, @RequestBody double amount){
+        return accountService.accumulationMoney(depositAccId, day,amount);
+    }
     @GetMapping("/findById/{id}")
     public Optional<Account> findById(@PathVariable Long id){
        return accountService.findById(id);
     }
     @GetMapping("/findAllId")
-    public <List> Bank getAllBank(){
-        return (Bank) accountService.findAll();
+    public <List> java.util.List<Account> getAllAccount(){
+        return accountService.findAll();
     }
     @PostMapping("/delete/{id}")
     public void deleteAccount(@PathVariable Long id){

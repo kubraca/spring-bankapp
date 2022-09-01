@@ -23,18 +23,32 @@ public class AccountServiceImpl implements AccountService {
         return added;
     }
 
-    @Override
-    public void sendMoney(Account senderAcc, Account recieverAcc, double amount) {
-        if(senderAcc.getBalance()>0){
-            senderAcc.setBalance(senderAcc.getBalance()-amount);
-            recieverAcc.setBalance(recieverAcc.getBalance()+amount);
-            this.accountRepository.saveAndFlush(senderAcc);
-            this.accountRepository.saveAndFlush(recieverAcc);
+    public void sendMoney(Long senderAccId, Long recieverAccId, double amount) {
+        var senderAcc= accountRepository.findById(senderAccId);
+        var recieverAcc= accountRepository.findById(recieverAccId);
+
+        if(senderAcc.get().getBalance()>0){
+            senderAcc.get().setBalance(senderAcc.get().getBalance()-amount);
+            recieverAcc.get().setBalance(recieverAcc.get().getBalance()+amount);
+            this.accountRepository.saveAndFlush(senderAcc.get());
+            this.accountRepository.saveAndFlush(recieverAcc.get());
         }
-        else if(senderAcc.getBalance()<=0){
-            log.info("Yeterli bakiyeniz bulunmamaktadır.",amount,senderAcc.getBalance());
+        else if(senderAcc.get().getBalance()<=0){
+            log.info("Yeterli bakiyeniz bulunmamaktadır.",amount,senderAcc.get().getBalance());
         }
 
+    }
+    @Override
+    public double accumulationMoney(Long depositAccId, int day, double money){
+        var account=accountRepository.findById(depositAccId);
+        if(account.get().getBalance()>0 && account.get().getAccountType().equals("vadeli")){
+            long accumulated = (long) ((money * day * 0.15 * account.get().getRate()) / 36500.0);
+           return accumulated;//account.setBalance(account.getBalance()+accumulated);
+
+        }
+        else
+            return 0;
+            //log.info("Hesap türünüzü ve bakiyenizi kontrol ediniz.");
     }
     @Override
     public List<Account> findAll() {

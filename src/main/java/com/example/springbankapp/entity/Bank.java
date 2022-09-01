@@ -27,6 +27,8 @@ public class Bank implements Serializable {
     private double dailyInterestRate;
     @Column(length = 100, name = "accRate")
     private double accumulationRate;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()
+    @JoinColumn(name = "banksCustomerList")
     private List<Customer> customerList;
 }
+//cascade = CascadeType.ALL

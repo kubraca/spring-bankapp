@@ -12,9 +12,9 @@ public interface CustomerService {
 
     Optional<Customer> findById(Long id);
 
-    Customer add(Customer customer);
+    Customer add(CustomerRequest request);
 
-    Account addAccount(Customer customer, Account account);
+    Account addAccount(Long id, Account account);
 
     Customer updateCustomerInfo(Long id, CustomerRequest customerRequest);
 

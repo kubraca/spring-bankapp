@@ -19,16 +19,16 @@ public class CustomerController {
 
     @PostMapping("/addCustomer")
     public Customer add(@RequestBody CustomerRequest request){
-       return customerService.add(request.convertToCustomer());
+       return customerService.add(request);
 
     }
     @GetMapping("/findByID")
     public Optional<Customer> findJustOne (Long id){
         return customerService.findById(id);
     }
-    @PostMapping("/addAccount")
-    public Account addAccount(@RequestBody CustomerRequest request,Account account){
-        return customerService.addAccount(request.convertToCustomer(),account);
+    @PostMapping("/addAccount/{customerId}") // aynı müşteriye 2 farklı hesap eklenemiyor!
+    public Account addAccount(@PathVariable Long customerId,@RequestBody Account account){
+        return customerService.addAccount(customerId,account);
     }
     @GetMapping("/findAllCust")
     public List<Customer> findAllCust(){

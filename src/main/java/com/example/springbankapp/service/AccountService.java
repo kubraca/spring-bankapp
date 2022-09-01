@@ -8,7 +8,9 @@ import java.util.Optional;
 public interface AccountService {
     Account add(Account account);
 
-    void sendMoney(Account senderAcc, Account recieverAcc, double amount);
+    void sendMoney(Long senderAccId, Long recieverAcc, double amount);
+
+    double accumulationMoney(Long depositAccID, int day, double money);
 
     List<Account> findAll();
     Optional<Account> findById(Long id);
