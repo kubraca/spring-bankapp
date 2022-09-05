@@ -38,17 +38,26 @@ public class AccountServiceImpl implements AccountService {
         }
 
     }
+    public void withdrawMoney(Long accountId, double money){
+        var account=accountRepository.findById(accountId);
+        if (account.get().getBalance()>0){
+            account.get().setBalance(account.get().getBalance()-money);
+            this.accountRepository.saveAndFlush(account.get());
+        } else
+            log.info("Yeterli bakiyeniz bulunmamaktadır.",money,account.get().getBalance());
+        }
+
     @Override
     public double accumulationMoney(Long depositAccId, int day, double money){
         var account=accountRepository.findById(depositAccId);
         if(account.get().getBalance()>0 && account.get().getAccountType().equals("vadeli")){
             long accumulated = (long) ((money * day * 0.15 * account.get().getRate()) / 36500.0);
-           return accumulated;//account.setBalance(account.getBalance()+accumulated);
+           return accumulated;
 
-        }
-        else
+        } else {
             return 0;
-            //log.info("Hesap türünüzü ve bakiyenizi kontrol ediniz.");
+        } //log.info("Hesap türünüzü ve bakiyenizi kontrol ediniz.");
+
     }
     @Override
     public List<Account> findAll() {
@@ -62,5 +71,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
+
     }
 }

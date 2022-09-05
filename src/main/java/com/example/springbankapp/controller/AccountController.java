@@ -20,13 +20,17 @@ public class AccountController {
 
     }
     @PostMapping("/sendMoney")
-    public void sendMoney(Long senderId, Long recieverId,
-                          @RequestBody double amount) {
+    public void sendMoney( Long senderId, Long recieverId,
+                          double amount) {
         accountService.sendMoney(senderId,recieverId,amount);
     }
     @PostMapping("/accumulationMoney")
-    public double accumulationMoney(Long depositAccId, int day, @RequestBody double amount){
+    public double accumulationMoney( Long depositAccId, int day, double amount){
         return accountService.accumulationMoney(depositAccId, day,amount);
+    }
+    @PostMapping("/withdrawMoney")
+    public void withdrawMoney( Long accountId, double drawMoney){
+         accountService.withdrawMoney(accountId,drawMoney);
     }
     @GetMapping("/findById/{id}")
     public Optional<Account> findById(@PathVariable Long id){
